@@ -144,19 +144,17 @@ yolo export model=yolov11n-seg.pt format=engine half=True device=0
 
 ## ✉️ Contact & Citation
 
-**Author**: MohammadHossein Shamsipour
-
-**Email**: mohammadhossein.shamsipoor@gmail.com
+**Authors**: 
+* MohammadHossein Shamsipour (mohammadhossein.shamsipoor@gmail.com)
+* Aida Khaleghi (aiida.khaleghi@gmail.com)
 
 ```bibtex
 @software{shamsipour2025yolo,
-  author = {Shamsipour, MohammadHossein},
+  author = {Shamsipour, MohammadHossein and Khaleghi, Aida},
   title = {YOLOv11 Instance Segmentation and Model Evaluation in Adverse Conditions: A Comprehensive Study Using CARLA Simulator},
   year = {2025},
   month = {June},
   publisher = {GitHub},
   journal = {GitHub Repository},
-  howpublished = {\url{https://github.com/Mound21k/yolov11-carla-segmentation}}
+  howpublished = {\url{[https://github.com/Mound21k/yolov11-carla-segmentation](https://github.com/Mound21k/yolov11-carla-segmentation)}}
 }
-
-```
