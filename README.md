@@ -81,7 +81,7 @@ yolo segment train data=carla_dataset.yaml model=yolov11n-seg.pt epochs=100 imgs
 All generators extend `carla_base_generator.py` and are built to guarantee data coverage for **4 primary target classes** (cars, buses, pedestrians, and traffic lights) with advanced fixes[cite: 1]:
 
 * **`carla_base_generator.py`**: Features robust actor cleanup tracking to systematically prevent "failed to destroy actor" simulation leaks, alongside safe math conversions for runtime telemetry calculations.
-* **`daytime_generator.py` & `rain_generator.py**`: Fixed division-by-zero telemetry bugs and improved edge-case exceptions during heavy traffic loads.
+* **`daytime_generator.py` & `rain_generator.py`**: Fixed division-by-zero telemetry bugs and improved edge-case exceptions during heavy traffic loads.
 * **`nighttime_generator.py`**: Resolved RPC sensor collision errors and fixed structure corruptions while adapting daytime logic to work with headlights and street lighting.
 * **`fog_generator.py`**: Cleaned up complex force-clear dependencies to align seamlessly with working patterns, using stable vehicle spawn spacing.
 
