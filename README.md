@@ -80,11 +80,11 @@ yolo segment train data=carla_dataset.yaml model=yolov11n-seg.pt epochs=100 imgs
 
 All generators extend `carla_base_generator.py` and are built to guarantee data coverage for **4 primary target classes** (cars, buses, pedestrians, and traffic lights) with advanced fixes:
 
-* **`carla_base_generator.py`**: Features robust actor cleanup tracking to systematically prevent "failed to destroy actor" simulation leaks, alongside safe math conversions for runtime telemetry calculations.
-* **`daytime_generator.py` & `rain_generator.py`**: Fixed division-by-zero telemetry bugs and improved edge-case exceptions during heavy traffic loads.
-* **`nighttime_generator.py`**: Resolved RPC sensor collision errors and fixed structure corruptions while adapting daytime logic to work with headlights and street lighting.
-* **`fog_generator.py`**: Cleaned up complex force-clear dependencies to align seamlessly with working patterns, using stable vehicle spawn spacing.
-
+* **`carla_base_generator.py`**: The core backbone class (`DynamicCARLADatasetGenerator`). Manages the synchronous server-client loop (20 FPS / $\Delta t = 0.05\text{s}$), handles thread-safe synchronization of the dual-camera rig (RGB and Instance Segmentation) using `threading.Lock`, and implements the mathematical pipeline that simplifies and normalizes OpenCV contours into YOLO-compliant polygons.
+* **`daytime_generator.py`**: Inherits the core loop to establish the baseline dataset. Configures ideal lighting and standard atmospheric visibility while maximizing spawning weights for target classes (cars, pedestrians, traffic signs) to build a robust control training set.
+* **`rain_generator.py`**: Simulates dynamic wet-weather environments by overriding physics parameters. It programmatically reduces actor target speeds, increases road wetness/reflection levels, activates vehicle windshield wipers, and handles high-glare semantic captures.
+* **`nighttime_generator.py`**: Generates dark, low-illumination datasets by overriding ambient map lighting. It uses CARLA's vehicle light APIs to procedurally activate headlights, taillights, and randomized hazard light patterns to replicate realistic night driving.
+* **`fog_generator.py`**: Simulates heavy, sight-obscuring mist using dense fog overlays. It throttles vehicle speeds to prevent physics engine collisions in low visibility and adjusts vehicle spawning buffers to guarantee safe spacing while generating clean, obscured ground-truth labels.
 ### 2. Augmentation & Labeling Pipeline (`/codes/augmenting_AND_labeling/data_processing.py`)
 
 This script completely automates your ingestion pipeline:
