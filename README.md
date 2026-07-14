@@ -113,30 +113,14 @@ The complete multi-weather generation run yields 3,704 synchronized frame pairs 
 
 ### Model Variant Performance Comparison
 
+## 📈 Evaluation Results
+
+### Model Variant Performance Comparison
+
 | Model | Task | Precision | Recall | mAP50 | mAP50-95 | Training Time |
-| --- | --- | --- | --- | --- | --- | --- |
-| **YOLOv11n-seg** *(100 epochs)* | **Box**<br>
-
-<br>**Mask** | 0.699<br>
-
-<br>0.565 | 0.648<br>
-
-<br>0.390 | 0.690<br>
-
-<br>0.432 | 0.452<br>
-
-<br>0.231 | ~1.36 hours |
-| **YOLOv11m-seg** *(20 epochs)* | **Box**<br>
-
-<br>**Mask** | 0.715<br>
-
-<br>0.580 | 0.656<br>
-
-<br>0.354 | 0.670<br>
-
-<br>0.386 | 0.462<br>
-
-<br>0.214 | ~1.05 hours |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **YOLOv11n-seg** *(100 epochs)* | **Box**<br>**Mask** | 0.699<br>0.565 | 0.648<br>0.390 | 0.690<br>0.432 | 0.452<br>0.231 | ~1.36 hours |
+| **YOLOv11m-seg** *(20 epochs)* | **Box**<br>**Mask** | 0.715<br>0.580 | 0.656<br>0.354 | 0.670<br>0.386 | 0.462<br>0.214 | ~1.05 hours |
 
 > 💡 **Key Insight**: The medium variant (`YOLOv11m-seg`) exhibits **accelerated feature convergence**, matching the detection mAP of the nano model while using only **20% of the training duration** (20 epochs vs 100 epochs).
 
