@@ -1,12 +1,12 @@
 # YOLOv11 Instance Segmentation and Model Evaluation in Adverse Conditions: A Comprehensive Study Using CARLA Simulator
 
-This repository contains the dataset generation scripts, data processing pipelines, training configurations, and evaluation results for a comprehensive study on **YOLOv11 Instance Segmentation** in autonomous driving scenarios under challenging weather conditions using the **CARLA Simulator**[cite: 1].
+This repository contains the dataset generation scripts, data processing pipelines, training configurations, and evaluation results for a comprehensive study on **YOLOv11 Instance Segmentation** in autonomous driving scenarios under challenging weather conditions using the **CARLA Simulator**.
 
 ---
 
 ## 📌 Overview
 
-Autonomous driving perception systems degrade severely under adverse weather conditions like fog, rain, and low-light night environments[cite: 1]. This project evaluates the robustness and computational trade-offs of modern instance segmentation networks (**YOLOv11n-seg** and **YOLOv11m-seg**) under these environmental constraints[cite: 1].
+Autonomous driving perception systems degrade severely under adverse weather conditions like fog, rain, and low-light night environments. This project evaluates the robustness and computational trade-offs of modern instance segmentation networks (**YOLOv11n-seg** and **YOLOv11m-seg**) under these environmental constraints.
 
 ---
 
@@ -78,7 +78,7 @@ yolo segment train data=carla_dataset.yaml model=yolov11n-seg.pt epochs=100 imgs
 
 ### 1. Data Generation (`/codes/data_generation`)
 
-All generators extend `carla_base_generator.py` and are built to guarantee data coverage for **4 primary target classes** (cars, buses, pedestrians, and traffic lights) with advanced fixes[cite: 1]:
+All generators extend `carla_base_generator.py` and are built to guarantee data coverage for **4 primary target classes** (cars, buses, pedestrians, and traffic lights) with advanced fixes:
 
 * **`carla_base_generator.py`**: Features robust actor cleanup tracking to systematically prevent "failed to destroy actor" simulation leaks, alongside safe math conversions for runtime telemetry calculations.
 * **`daytime_generator.py` & `rain_generator.py`**: Fixed division-by-zero telemetry bugs and improved edge-case exceptions during heavy traffic loads.
@@ -89,15 +89,15 @@ All generators extend `carla_base_generator.py` and are built to guarantee data 
 
 This script completely automates your ingestion pipeline:
 
-* **GroundedSAM Automations**: Uses grounded language prompts to auto-detect and construct polygon boundaries around objects in images, shifting raw simulator output to YOLO format[cite: 1].
-* **Position-Based Splits**: Instead of naive random splits, it groups frames by the ego-vehicle's actual coordinate positions to test true spatial generalization[cite: 1].
-* **Albumentations Augmentations**: Dynamically scales, mirrors, and injects sensory noise/exposure drops into images while keeping polygon boundaries perfectly locked to coordinate tracking shifts[cite: 1].
+* **GroundedSAM Automations**: Uses grounded language prompts to auto-detect and construct polygon boundaries around objects in images, shifting raw simulator output to YOLO format.
+* **Position-Based Splits**: Instead of naive random splits, it groups frames by the ego-vehicle's actual coordinate positions to test true spatial generalization.
+* **Albumentations Augmentations**: Dynamically scales, mirrors, and injects sensory noise/exposure drops into images while keeping polygon boundaries perfectly locked to coordinate tracking shifts.
 
 ---
 
 ## 📊 Dataset Statistics
 
-The complete multi-weather generation run yields 3,704 synchronized frame pairs spanning across complex activity thresholds[cite: 1]:
+The complete multi-weather generation run yields 3,704 synchronized frame pairs spanning across complex activity thresholds:
 
 | Weather Condition | Samples | Vehicles | Traffic Lights | Pedestrians |
 | --- | --- | --- | --- | --- |
@@ -115,40 +115,40 @@ The complete multi-weather generation run yields 3,704 synchronized frame pairs 
 
 | Model | Task | Precision | Recall | mAP50 | mAP50-95 | Training Time |
 | --- | --- | --- | --- | --- | --- | --- |
-| **YOLOv11n-seg** *(100 epochs)*[cite: 1] | **Box**[cite: 1]<br>
+| **YOLOv11n-seg** *(100 epochs)* | **Box**<br>
 
-<br>**Mask**[cite: 1] | 0.699[cite: 1]<br>
+<br>**Mask** | 0.699<br>
 
-<br>0.565[cite: 1] | 0.648[cite: 1]<br>
+<br>0.565 | 0.648<br>
 
-<br>0.390[cite: 1] | 0.690[cite: 1]<br>
+<br>0.390 | 0.690<br>
 
-<br>0.432[cite: 1] | 0.452[cite: 1]<br>
+<br>0.432 | 0.452<br>
 
-<br>0.231[cite: 1] | ~1.36 hours[cite: 1] |
-| **YOLOv11m-seg** *(20 epochs)*[cite: 1] | **Box**[cite: 1]<br>
+<br>0.231 | ~1.36 hours |
+| **YOLOv11m-seg** *(20 epochs)* | **Box**<br>
 
-<br>**Mask**[cite: 1] | 0.715[cite: 1]<br>
+<br>**Mask** | 0.715<br>
 
-<br>0.580[cite: 1] | 0.656[cite: 1]<br>
+<br>0.580 | 0.656<br>
 
-<br>0.354[cite: 1] | 0.670[cite: 1]<br>
+<br>0.354 | 0.670<br>
 
-<br>0.386[cite: 1] | 0.462[cite: 1]<br>
+<br>0.386 | 0.462<br>
 
-<br>0.214[cite: 1] | ~1.05 hours[cite: 1] |
+<br>0.214 | ~1.05 hours |
 
-> 💡 **Key Insight**: The medium variant (`YOLOv11m-seg`) exhibits **accelerated feature convergence**, matching the detection mAP of the nano model while using only **20% of the training duration** (20 epochs vs 100 epochs)[cite: 1].
+> 💡 **Key Insight**: The medium variant (`YOLOv11m-seg`) exhibits **accelerated feature convergence**, matching the detection mAP of the nano model while using only **20% of the training duration** (20 epochs vs 100 epochs).
 
 ---
 
 ## ⚡ TensorRT Edge Deployment & Optimization
 
-For production real-time safety, the optimized `YOLOv11n-seg` network was compiled into an NVIDIA TensorRT engine using FP16 quantization arithmetic[cite: 1]:
+For production real-time safety, the optimized `YOLOv11n-seg` network was compiled into an NVIDIA TensorRT engine using FP16 quantization arithmetic:
 
-* **Latency Optimization**: Mean inference time dropped from **11.87 ms** down to **2.89 ms** (**4.11x raw speedup**)[cite: 1].
-* **Throughput Multiplier**: Video parsing capabilities expanded from 84 FPS to an ultra-fast **346 FPS** execution footprint[cite: 1].
-* **Jitter Elimination**: Latency variance plummeted from **±1.76 ms** to a rock-solid **±0.03 ms**, delivering highly predictable processing loops required by autonomous platforms[cite: 1].
+* **Latency Optimization**: Mean inference time dropped from **11.87 ms** down to **2.89 ms** (**4.11x raw speedup**).
+* **Throughput Multiplier**: Video parsing capabilities expanded from 84 FPS to an ultra-fast **346 FPS** execution footprint.
+* **Jitter Elimination**: Latency variance plummeted from **±1.76 ms** to a rock-solid **±0.03 ms**, delivering highly predictable processing loops required by autonomous platforms.
 
 ```bash
 # Export your trained model directly to a TensorRT Engine
@@ -160,9 +160,9 @@ yolo export model=yolov11n-seg.pt format=engine half=True device=0
 
 ## ✉️ Contact & Citation
 
-**Author**: MohammadHossein Shamsipour[cite: 1]
+**Author**: MohammadHossein Shamsipour
 
-**Email**: mohammadhossein.shamsipoor@gmail.com[cite: 1]
+**Email**: mohammadhossein.shamsipoor@gmail.com
 
 ```bibtex
 @software{shamsipour2025yolo,
