@@ -156,5 +156,5 @@ yolo export model=yolov11n-seg.pt format=engine half=True device=0
   month = {June},
   publisher = {GitHub},
   journal = {GitHub Repository},
-  howpublished = {\url{[https://github.com/Mound21k/yolov11-carla-segmentation](https://github.com/Mound21k/yolov11-carla-segmentation)}}
+  howpublished = {https://github.com/Mound21k/yolov11-carla-segmentation}
 }
